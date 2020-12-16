@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>users</title>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'contacts/users_list.css' %}">
+    </head>
+
+    <body>
+        <header>
+            <h1><a href="http://localhost:8000/home/">CRM</a></h1>
+        </header>
+
+        <!-- tabela uzytkownikow --> 
+        <div class="users">
+        <div class="title">Users</div>
+        {% if u_list %}
+            <table id="users">
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Birth Date</th>
+                <th>Login</th>
+                <th></th> 
+                {% for user in u_list %}
+                    {% if user.isDeleted == "F" %}
+                    <tr>
+                        <td>{{user.name}}</td>
+                        <td>{{user.surname}}</td>
+                        <td>{{user.dateOfBirth}}</td>
+                        <td>{{user.login}}</td>
+                        <td><label for="show-edit" class="edit-button">Edit</label>
+                            <label for="delete-button" class="delete">Delete</label>
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No users are available.</p>
+        {% endif %}
+        </div>
+        <!--koniec tabeli uzytkownikow -->
+
+        <!-- stronicowanie -->
+        <div class="pagination">
+            {% if u_list.has_previous %}
+                <a href="?page=1"><<</a>
+                <a href="?page={{ u_list.previous_page_number }}"><</a>
+            {% endif %}
+            {% for i in u_list.paginator.page_range %}
+                {% if u_list.number == i %}
+                    <strong>{{ i }}</strong>
+                {% elif i > u_list.number|add:'-3' and i < u_list.number|add:'3' %}
+                    <a href="?page={{ i }}">{{ i }}</a>
+                {% endif %}
+
+            {% endfor %}
+
+            {% if u_list.has_next %}
+                <a href="?page={{ u_list.next_page_number }}">></a>
+                <a href="?page={{ u_list.paginator.num_pages }}">>></a>
+            {% endif %}
+        </div>
+        <!-- koniec stronicowania -->
+
+        <!-- edytowanie istniejącego użytkownika -->
+
+        <!-- chceckbox edit user -->
+        <input id="show-edit" type="checkbox">
+
+        <div class="edit-container">
+            <label for="show-edit" class="close-button">x</label>
+            <div class="text">Edit user</div>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Save">
+            </form>
+        </div>
+        <!-- koniec edytowania istniejącego użytkownika -->
+
+    </body>
+</html>

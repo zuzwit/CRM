@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<head>
+    <title>home</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'contacts/home.css' %}">
+</head>
+
+<body>
+
+    <div class="main">
+        <div class="text">CRM</div>
+        <div class="login-button">
+            <form action="http://localhost:8000/login/">
+                <input type="submit" value="Login"/>
+            </form>
+        </div>
+        <div class="register-button">
+            <form action="http://localhost:8000/register/">
+                <input type="submit" value="Register"/>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

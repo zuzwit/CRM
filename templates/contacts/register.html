@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<head>
+    <title>home</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'contacts/registration.css' %}">
+</head>
+
+<body>
+
+    <!-- dodawanie nowego użytkownika -->
+
+    <div class="registration-container">
+        <div class="text">Create an account!</div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Register">
+        </form>
+    </div>
+    <!-- koniec dodawania nowego użytkownika -->
+
+</body>
+</html>
